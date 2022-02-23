@@ -44,8 +44,6 @@ once Installation done, create a user, DB and allocate auth
 
 MySQL installation
 
-
-
 - Queries
   - CREATE table;
   - Data type
@@ -58,10 +56,67 @@ MySQL installation
     - Timestamp
     - Time
     - Bool
-    - Enum
+    - Enum ["Indian","Shrilanka","UAE"]
+
+  - Insert
+  - Select
+  - Auto Increament
+    - SERIAL --> Postgres
+    - AUTOINCREAMENT ----> Mysql
+    - IDENTITY(1,1) ----> MSSQL
+  - Relationship
+    - Primary Key
+      - Unique Key
+      - Not Null
+      - Usually it is assign to the ID col of the table
+      - only 1 primary key in a table
+      - Query
+        Create table roles(
+          rolesId Serial Primary key,
+          rolename varchar(255),
+          datecreated date,
+          isSystemRole bool
+        ) 
+    - FK
+      - it can be multiple FKs
+      - Query 
+        Create tabe users(
+          userId Serial,
+          first_name varchar(255),
+          last_name varchae(255),
+          rolesId int REFERENCES roles(rolesId)
+        )
+  - ALTER TABLES
+    - alter table users ADD COLUMN emailId varchar(100) UNIQUE
+    - alter table users ALTER COLUMN emailId TYPE varchar(150)
+    - alter table users ALTER COLUMN emailId TYPE char(200)
+
+  - DELETE AND DROP
+    - delete from users; -- it just empty the table with or without where clause;
+    - drop table user -- it drop the complete table with the data;
+    - truncate table users -- empty the table;
+  - INSERT QUERY
+    -insert into roles(rolesname,datecreated,isSystemrole) values ('Super1',now(),true);
+    -insert into roles(rolesname,datecreated,isSystemrole) values ('Super2',now(),true), ('Super3',now(),true);
+  
+  - CRUD OPERATIONS
+    -- C CREATE
+      -insert into roles(rolesname,datecreated,isSystemrole) values ('Super1',now(),true);
+    -- R READ
+      - select * from roles;
+    -- U UPDATE
+      - update roles set rolename = 'samyak' where roleId = 5;
+    -- D DELETE
+      - delete from roles where roleId = 5;
 
 
+MOVIES DATABASE
+
+select * from actors;
 select * from directors;
+select * from movies;
+select * from movies_actors;
+select * from movie_revenues;
 select first_name, last_name from directors;
 select first_name as f_name, last_name AS l_name from directors;
 select * from movies where age_certification = '15';
@@ -74,15 +129,28 @@ select * from movies where age_certification not in ('PG','18','U');
 select * from movies where movies_name like '%Now';
 select * from movies where movies_name like '%Now%';
 select * from movies where movies_name like 'City of ___';
-select * from actors;
-
-
-
- 
-
-
-
-
+select * from movies where release_date = '2000-01-02';
+select * from movies where release_date between '2000-01-02' and '2010-01-01' (--OPTIMIZED VERSION )
+select * from movies where release_date > '2000-01-02' and release_date < '2010-01-01'
+select * from movies LIMIT 5
+select * from movies LIMIT 7 offset 10
+select * from movies LIMIT 10,7 ------> Mysql
+select * from movies order by movies_id DESC LIMIT 1
+select * from movies order by age_certifiaction DESC fetch first 5 row only
+select * from movies fetch first 5 row only order by movies_id DESC
+select movie_id, movies_name, movie_lang from movies offset 10 rows fetch first 10 rows only
+select * from movies FETCH FIRST 15 ROW ONLY	
+select * from movies offset 10 rows fetch first 10 rows only	
+select * from movies fetch first row only order by movies_id DESC
+select top 5 from movies --> MySQL Server
+select 'concat' || 'values' as completevalue
+select 'mayur' || ' ' || 'patil' as fullname
+select CONCAT(first_name,' ',last_name) as fullname from actors	
+select CONCAT_WS(' ',first_name, last_name, date_of_birth) as fullname from actors
+select first_name || ' ' || last_name as full_name from actors
+select * from pg_database; --------------> this list all the available database;
+select * from pg_catalog.pg_tables where schemaname like 'public' ----> this will list all the available tables
+select * from informtion_schema.columns where table_name = 'movies' -----> this describe the col of the table
 
 - Aggregrate function
   - SUM
@@ -91,14 +159,34 @@ select * from actors;
   - COUNT
   - AVG
 -Note : every aggregrate function always ignore the NULL value;
-
+  
   select * from movies;
   select count(*) from movies;
   select count(movie_id) from movies;
+  select count(domestic_takings) from movies_revenues
   select sum(domestic_takings) as national_revenue from movies_revenues;
   select MAX(domestic_takings) as maximum_revenue from movies_revenues;
   select MIN(domestic_takings) as minimum_revenue from movies_revenues;
-  
+  select AVG(domestic_takings) as average_revenue from movies_revenues;
+
+- GROUP BY 
+  select movies_lang, count(*) as movies from movies group by movies_lang;
+  select movies_lang from movies group by movies_lang;
+  select movies_lang, age_certification, avg(movies_length) as movies from movies group by movies_lang, age_certifiaction
+  select movies_lang, age_certification, avg(movies_length) as movies from movies group by movies_lang
+
+- HAVING WITH GROUP BY
+    select movies_lang, count(movies_lang) from movies group by movies_lang;
+    select movies_lang, count(movies_lang) from movies where count(movies_lang)>5 group by movies_lang;
+    select movies_lang, count(movies_lang) from movies group by movies_lang  having count(movies_lang)>5;
+    select movies_lang, count(movies_lang) from movies where movies_length>120 group by movies_lang  having count(movies_lang)>5;
+
+- Math Operations and Calc
+  select 5 + 6 as T, 10 - 5 as M, 2 * 4 as S, 10/12 as k;
+  select 12 % 4 as mod;
+  select movies_id, (domestic_taking + international_taking) as total, * from movie_revenues;
+
+ 
 
 
 # select movie_lang ,count(movie_lang) as no_of_movies from movies group by movie_lang, movie_length having movie_length < avg(movie_length) 
@@ -124,5 +212,7 @@ select * from actors;
   - select SPLIT_PART(date_of_birth::varchar(50),'-',1) from directors
   - select SPLIT_PART(date_of_birth::varchar(2),'-',1) from directors
   - select REPLACE(date_of_birth::varchar(10),'-','/') from directors
-  -  
+
+-- JSON (JavaScript Object Notation)
+
 
