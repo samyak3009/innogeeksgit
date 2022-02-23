@@ -40,6 +40,7 @@ once Installation done, create a user, DB and allocate auth
   - CREATE USER samyak3009 WITH PASSWORD '******8';
   - CREATE DATABASE innovaccer;
   - GRANT ALL PRIVILEGES ON DATABASE innovaccer to samyak3009;
+  - ALTER USER user_name CREATEDB CREATEROLE LOGIN;
 
 MySQL installation
 
@@ -79,4 +80,49 @@ select * from actors;
 
  
 
+
+
+
+
+- Aggregrate function
+  - SUM
+  - MAX
+  - MIN
+  - COUNT
+  - AVG
+-Note : every aggregrate function always ignore the NULL value;
+
+  select * from movies;
+  select count(*) from movies;
+  select count(movie_id) from movies;
+  select sum(domestic_takings) as national_revenue from movies_revenues;
+  select MAX(domestic_takings) as maximum_revenue from movies_revenues;
+  select MIN(domestic_takings) as minimum_revenue from movies_revenues;
+  
+
+
+# select movie_lang ,count(movie_lang) as no_of_movies from movies group by movie_lang, movie_length having movie_length < avg(movie_length) 
+
+
+
+-- String function
+  - select UPPER('samyak'); #SAMYAK
+  - select LOWER('JAIN'); #jain
+  - select INITCAP('samyak jain') #Samyak Jain
+  - select *, UPPPER(first_name) as CAP from actors
+  - select LEFT('INDIA',4); #INDI
+  - select LEFT('INDIA', -3) #IN  (it will remove the last 3 letter)
+  - select RIGHT('INDIA',3) #DIA
+  - select RIGHT('INDIA',-3) #IA  (it will remove the last 3 letter)
+  - select 8,LEFT(movies_name,5) from movies
+  - select REVERSE('INDIA')
+  - select SUBSTRING('INDIA,2,3) #NDI  (start from 2 and print 3 character)
+  - select REPLACE('I AM FROM INDIA','INDIA','USA')
+  - select SPLIT_PART('samyak3009@gmail.com','@',1) #samyak3009
+  - select date_of_birth from directors
+  - select SPLIT_PART(date_of_birth::TEXT,'-',1) from directors
+  - select SPLIT_PART(date_of_birth::varchar(50),'-',1) from directors
+  - select SPLIT_PART(date_of_birth::varchar(2),'-',1) from directors
+  - select REPLACE(date_of_birth::varchar(10),'-','/') from directors
+  -  
 
