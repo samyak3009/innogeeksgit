@@ -112,45 +112,45 @@ MySQL installation
 
 MOVIES DATABASE
 
-select * from actors;
-select * from directors;
-select * from movies;
-select * from movies_actors;
-select * from movie_revenues;
-select first_name, last_name from directors;
-select first_name as f_name, last_name AS l_name from directors;
-select * from movies where age_certification = '15';
-select * from movies where age_certification = '15' and movie_lang = 'English';
-select * from movies where age_certification = '15' or movie_lang = 'English';
-select * from movies where movie_length in (121,150,115,112);
-select * from movies where movie_length not in (121,150,115,112);
-select * from movies where age_certification in ('PG','18','U');
-select * from movies where age_certification not in ('PG','18','U');
-select * from movies where movies_name like '%Now';
-select * from movies where movies_name like '%Now%';
-select * from movies where movies_name like 'City of ___';
-select * from movies where release_date = '2000-01-02';
-select * from movies where release_date between '2000-01-02' and '2010-01-01' (--OPTIMIZED VERSION )
-select * from movies where release_date > '2000-01-02' and release_date < '2010-01-01'
-select * from movies LIMIT 5
-select * from movies LIMIT 7 offset 10
-select * from movies LIMIT 10,7 ------> Mysql
-select * from movies order by movies_id DESC LIMIT 1
-select * from movies order by age_certifiaction DESC fetch first 5 row only
-select * from movies fetch first 5 row only order by movies_id DESC
-select movie_id, movies_name, movie_lang from movies offset 10 rows fetch first 10 rows only
-select * from movies FETCH FIRST 15 ROW ONLY	
-select * from movies offset 10 rows fetch first 10 rows only	
-select * from movies fetch first row only order by movies_id DESC
-select top 5 from movies --> MySQL Server
-select 'concat' || 'values' as completevalue
-select 'mayur' || ' ' || 'patil' as fullname
-select CONCAT(first_name,' ',last_name) as fullname from actors	
-select CONCAT_WS(' ',first_name, last_name, date_of_birth) as fullname from actors
-select first_name || ' ' || last_name as full_name from actors
-select * from pg_database; --------------> this list all the available database;
-select * from pg_catalog.pg_tables where schemaname like 'public' ----> this will list all the available tables
-select * from informtion_schema.columns where table_name = 'movies' -----> this describe the col of the table
+  select * from actors;
+  select * from directors;
+  select * from movies;
+  select * from movies_actors;
+  select * from movie_revenues;
+  select first_name, last_name from directors;
+  select first_name as f_name, last_name AS l_name from directors;
+  select * from movies where age_certification = '15';
+  select * from movies where age_certification = '15' and movie_lang = 'English';
+  select * from movies where age_certification = '15' or movie_lang = 'English';
+  select * from movies where movie_length in (121,150,115,112);
+  select * from movies where movie_length not in (121,150,115,112);
+  select * from movies where age_certification in ('PG','18','U');
+  select * from movies where age_certification not in ('PG','18','U');
+  select * from movies where movies_name like '%Now';
+  select * from movies where movies_name like '%Now%';
+  select * from movies where movies_name like 'City of ___';
+  select * from movies where release_date = '2000-01-02';
+  select * from movies where release_date between '2000-01-02' and '2010-01-01' (--OPTIMIZED VERSION )
+  select * from movies where release_date > '2000-01-02' and release_date < '2010-01-01'
+  select * from movies LIMIT 5
+  select * from movies LIMIT 7 offset 10
+  select * from movies LIMIT 10,7 ------> Mysql
+  select * from movies order by movies_id DESC LIMIT 1
+  select * from movies order by age_certifiaction DESC fetch first 5 row only
+  select * from movies fetch first 5 row only order by movies_id DESC
+  select movie_id, movies_name, movie_lang from movies offset 10 rows fetch first 10 rows only
+  select * from movies FETCH FIRST 15 ROW ONLY	
+  select * from movies offset 10 rows fetch first 10 rows only	
+  select * from movies fetch first row only order by movies_id DESC
+  select top 5 from movies --> MySQL Server
+  select 'concat' || 'values' as completevalue
+  select 'mayur' || ' ' || 'patil' as fullname
+  select CONCAT(first_name,' ',last_name) as fullname from actors	
+  select CONCAT_WS(' ',first_name, last_name, date_of_birth) as fullname from actors
+  select first_name || ' ' || last_name as full_name from actors
+  select * from pg_database; --------------> this list all the available database;
+  select * from pg_catalog.pg_tables where schemaname like 'public' ----> this will list all the available tables
+  select * from informtion_schema.columns where table_name = 'movies' -----> this describe the col of the table
 
 - Aggregrate function
   - SUM
@@ -159,10 +159,11 @@ select * from informtion_schema.columns where table_name = 'movies' -----> this 
   - COUNT
   - AVG
 -Note : every aggregrate function always ignore the NULL value;
+        aggregration function are not allowed in the where clause
   
   select * from movies;
   select count(*) from movies;
-  select count(movie_id) from movies;
+  select count(movie_id) from movies; ----> optimized one as only one column is counted
   select count(domestic_takings) from movies_revenues
   select sum(domestic_takings) as national_revenue from movies_revenues;
   select MAX(domestic_takings) as maximum_revenue from movies_revenues;
@@ -173,11 +174,11 @@ select * from informtion_schema.columns where table_name = 'movies' -----> this 
   select movies_lang, count(*) as movies from movies group by movies_lang;
   select movies_lang from movies group by movies_lang;
   select movies_lang, age_certification, avg(movies_length) as movies from movies group by movies_lang, age_certifiaction
-  select movies_lang, age_certification, avg(movies_length) as movies from movies group by movies_lang
+  # select movies_lang, age_certification, avg(movies_length) as movies from movies group by movies_lang
 
 - HAVING WITH GROUP BY
     select movies_lang, count(movies_lang) from movies group by movies_lang;
-    select movies_lang, count(movies_lang) from movies where count(movies_lang)>5 group by movies_lang;
+    # select movies_lang, count(movies_lang) from movies where count(movies_lang)>5 group by movies_lang;
     select movies_lang, count(movies_lang) from movies group by movies_lang  having count(movies_lang)>5;
     select movies_lang, count(movies_lang) from movies where movies_length>120 group by movies_lang  having count(movies_lang)>5;
 
@@ -191,9 +192,144 @@ select * from informtion_schema.columns where table_name = 'movies' -----> this 
 
 # select movie_lang ,count(movie_lang) as no_of_movies from movies group by movie_lang, movie_length having movie_length < avg(movie_length) 
 
+-- Table relation
+  - one to one relation
+  - one to many relation
+  - many to many relation
+
+-- SQL JOINS"
+  - INNER JOIN
+    select d.director_id,
+           d.first_name,
+           d.last_name,
+           m.movies_name
+        from
+          directors d
+        INNER JOIN
+          movies m
+        om  
+          d.director_id = m.director_id
+        where
+          m.movies_lang = 'japanese'
+
+
+    select d.director_id,
+           d.first_name,
+           d.last_name,
+           m.movies_name,
+           r.domestic_takings
+        from
+          directors d
+        INNER JOIN
+          movies m
+        on  
+          d.director_id = m.director_id
+        INNER JOIN
+          movies_revenues m
+        on
+          m.movies_id = r.movies_id
+
+        where
+          m.movies_lang = 'japanese'
+
+  - LEFT JOIN
+    select d.director_id,
+           d.first_name,
+           d.last_name,
+           m.movies_name
+        from
+          directors d
+        LEFT JOIN
+          movies m
+        om  
+          d.director_id = m.director_id
+
+  - RIGHT JOIN
+    select d.director_id,
+           d.first_name,
+           d.last_name,
+           m.movies_name
+        from
+          directors d
+        RIGHT JOIN
+          movies
+        om  
+          d.director_id = m.director_id
+  
+  - FULL JOIN
+    select d.director_id,
+           d.first_name,
+           d.last_name,
+           m.movies_name
+        from
+          directors d
+        FULL JOIN
+          movies
+        om  
+          d.director_id = m.director_id
+  
+  - UNION --- merge the two table in vertical way but join merger the table in horizontal way
+    condition :- the column defination should be same
+    select first_name, lastname from actors
+    UNION
+    select first_name, lastname from directors
+
+  - UNION ALL -- will not remove the duplicate column although mergei the table as it is
+    select first_name, lastname from actors
+    UNION ALL
+    select first_name, lastname from directors
+  
+  - INTERSECT -- will reflect the common data
+    select first_name from actors
+    INTERSECT
+    select first_name from directors
+
+  - EXCEPT -- to find the uncomman things
+    select first_name, lastname from actors
+    EXCEPT
+    select first_name, lastname from directors
+
+-- SUB QUERIES
+
+  - non-corelated subqueries
+    - select movies_name, movies_length from movies
+        where movies_length > (select avg(movies_length) from movies)
+
+  - corealted subqueries
+  -- find the oldest director for each nationality
+    - select 
+      d1.first_name,
+      d1.last_name,
+      d1.date_of_birth,
+      d1.nationality 
+        from directors d1 
+      where date_of_birth = (select min(date_of_birth) form directors d2 where d2.nationality = d1.nationality)
+
+
+    - select movies_name from movies
+      where movie_id in (select movie_id  from movie_revenue where international_takings > domestic_takings)
+
+
+    - select movies_name from movies
+      where movie_id in (select movie_id  from movie_revenue where international_takings > domestic_takings
+                          UNION ALL
+                        select movie_id  from movie_revenue where international_takings < domestic_takings)
+   
+    - select 
+        m.movie_id,
+        m.movie_name,
+        d.first_name,
+        d.last_name
+      from movie m 
+        JOIN
+      director d
+        on m.director_id = d.director_id
+      where
+        movie_id in (select movie_id  from movie_revenue where international_takings > domestic_takings)
 
 
 -- String function
+
   - select UPPER('samyak'); #SAMYAK
   - select LOWER('JAIN'); #jain
   - select INITCAP('samyak jain') #Samyak Jain
