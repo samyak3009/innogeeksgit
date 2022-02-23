@@ -350,5 +350,98 @@ MOVIES DATABASE
   - select REPLACE(date_of_birth::varchar(10),'-','/') from directors
 
 -- JSON (JavaScript Object Notation)
+  - JSON
+  - JSONB
+
+
+  -- to default data type
+  select '{title : "Ironman"}'
+  - to type cast into text if not by default
+  select '{title : "Ironman"}'::TEXT
+  - to preserve the space
+  select '{"title" : "Ironman"}'::JSON
+  - to not to preserve the space 
+  select '{
+      
+      "title" : "Ironman"
+      
+      }':: JSONB
+
+
+create table book(
+  bookId serial primary key,
+  bookinfo JSONB
+)
+
+insert into  books (bookinfo) values ('{"title":"book 1"}'), ('{"title":"book 2"}') , ('{"title":"book 3"}')
+
+insert into  books (bookinfo) values ('{"title":"book 4","author":"Author 1"}')
+
+select bookid,bookinfo ->'title' from books #to directly acccess the json value in double quotes
+select bookid,bookinfo ->>'title' from books #to directly acccess the json value wihout double quotes
+
+update books set bookinfo = bookinfo || '{"author":"Author 1"}' where bookId =1;
+update books set bookinfo = bookinfo || '{"author":"Author 1 Modifies"}' where bookId =1;
+update books set bookinfo = bookinfo || '{"author":"Author 1, "category":"computer"}' where bookinfo->> 'author' = 'Author 1';
+update books set bookinfo = bookinfo - 'category' where bookinfo->> 'author' = 'Author 1'; # to remove a key value from a json
+
+-how to see the data in json
+select row_to_json(directors) from directors;
+select row_to_json(mydirectors) from (select * from directors) as mydirectors;
+
+
+-- to create a virtual table for complicated queries that are to be executed very often
+
+  create  or replace view moviedetails
+  as
+  select movies.* , directors.first_name,directors.last_name from movies 
+  INNER JOIN
+  directors
+  on movies.director_id = director.directors_id
+
+
+  select * form moviedetails  # to fetch the data from this virtual table
+
+-changes done in original file will get reflected in virtual table to 
+
+- TRIGGER
+  - A trigger is   defined as any event that sets  a course   of sequemce /action in a realtime environment
+  - EVENT
+    - INSERT , UPADTE , DELETE , TURUNCATE    
+      - TRIGGERS are associated with tables and view
+    - WHEN
+      - before
+      - after
+      - instead
+    - LEVEL
+      - Table
+      - Row
+
+    - function is logic  which will be executed/triggered on triggered event.
+
+
+    CREATE OR REPLACE FUNCTION fn_player_name_changes_log()
+      RETURNS TRIGGER
+      LANGUAGE PLPGSQL
+      as $$
+          BEGIN
+            --INTRODUCE TO BUSSINESS LOGIC
+            -- NEW AND OLD
+            IF  NEW.name <> OLD.name
+              THEN 
+              INSERT INTO playeraudits ( player_id,name,edit_date) values (OLD.player_id,OLD.name,now());
+            END IF
+
+            RETUEN NEW;
+          END;
+         $$
+
+
+
+
+
+
+
+
 
 
