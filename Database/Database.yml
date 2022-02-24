@@ -463,6 +463,75 @@ select row_to_json(mydirectors) from (select * from directors) as mydirectors;
   - select * from players_audits;
 
 
+Note: wget line add the repo details to our apt package
+
+-- Mongo db always store the data in JSON format
+-- No relationship can be established in MongoDB
+-- link : https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+-- Installation of MongoDB
+  -- sudo apt-get install gnupg
+  -- wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+  -- echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+  -- sudo apt-get update
+  -- sudo apt-get install -y mongodb-org
+  -- echo "mongodb-org hold" | sudo dpkg --set-selections
+     echo "mongodb-org-database hold" | sudo dpkg --set-selections
+     echo "mongodb-org-server hold" | sudo dpkg --set-selections
+     echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+     echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+     echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+  -- systemctl start mongod
+  -- systemctl status mongod # to check the status  
+  -- systemctl end mongod # to stop the mongo server
+
+  -- install studio-3t/robo 3t for GUI 
+
+  -- show databases;
+  -- use <dbname>;
+  in mongo we dont need to create a table we can directly store the data in mongo Db
+
+  User
+    - id
+    - first_name
+    - last_name
+    - email
+    - age
+to insert
+    -- db.Employee.insertOne({
+        first_name : "Nilesh",
+        last_name : "Paresh",
+        email : "nilesh@gmail.com",
+        age : 45,
+        isMarried : true
+      })
+
+to insert many
+    --db.Employee.insertMany([
+    {
+      first_name : "Nilesh",
+      last_name : "Paresh",
+      email : "nilesh@gmail.com",
+      age : 45,
+      isMarried : true
+    },{
+      first_name : "Nilesh1",
+      last_name : "Paresh1",
+      email : "nilesh1@gmail.com",
+      age : 44,
+      isMarried : true
+    },{
+      first_name : "Nilesh2",
+      last_name : "Paresh2",
+      email : "nilesh2@gmail.com",
+      age : 43,
+      isMarried : true
+    }
+    ])
+
+to fetch  
+  -- db.getCollection('Employee').find({})
+
 
 
 
