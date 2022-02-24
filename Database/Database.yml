@@ -417,8 +417,19 @@ select row_to_json(mydirectors) from (select * from directors) as mydirectors;
       - Table
       - Row
 
-    - function is logic  which will be executed/triggered on triggered event.
-
+    CREATE TABLE players(
+      player_id serial primary key,
+      name varchar(100) 
+    )
+    CREATE TABLE players_audits (
+      player_audit_id serial primary key,
+      player_id INT NOT NULL,
+      name varchar(100),
+      edit_date TIMESTAMP NOT NULL
+    )
+    insert into players (name) values ('virat kholi'), ('Dhoni') ,('sachin tendulkar');
+    
+    --function is logic  which will be executed/triggered on triggered event.
 
     CREATE OR REPLACE FUNCTION fn_player_name_changes_log()
       RETURNS TRIGGER
@@ -435,6 +446,22 @@ select row_to_json(mydirectors) from (select * from directors) as mydirectors;
             RETUEN NEW;
           END;
          $$
+
+
+    CREATE TRIGGER trigger_players_name_changes
+    -- BEFORE|AFTER|INSTEAD  INSERT|UPDATDELETE|TRUNCATE
+    BEFORE UPDATE
+    ON  players
+    FOR EACH ROW
+      EXECUTE PROCEDURE fn_player_name_changes_log()
+
+
+  - update players set name = 'Mahendra Singh Dhoni' where player_id = 2
+  - update players set name = 'MSD' where player_id = 2
+
+  - select * from players;
+  - select * from players_audits;
+
 
 
 
