@@ -507,7 +507,7 @@ to insert
       })
 
 to insert many
-    --db.Employee.insertMany([
+    -- db.Employee.insertMany([
     {
       first_name : "Nilesh",
       last_name : "Paresh",
@@ -529,8 +529,14 @@ to insert many
     }
     ])
 
+
 to fetch  
   -- db.getCollection('Employee').find({})
+
+
+
+
+
 
 
 
