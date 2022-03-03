@@ -15,6 +15,10 @@
       is_delete_detail bool,
     );
 
+insert into User_table (user_name,email,phone,age, gender, is_admin,is_customer, is_add_detail, is_delete_detail)
+values ('rahul','rahul@gmail.com','7888978796',34,'Male',true,true,true,true);
+
+
 --# category that store the details of categoey and the details of admin by which it is created 
     CREATE TABLE category(
       category_id SERIAL PRIMARY KEY,
@@ -22,6 +26,8 @@
       user_id int REFERENCES User(user_id),  ----> User table (FK)
 
     );
+
+insert into category (category_name, user_id) values ('Accessories',1);
 
 --# products that come under the category
     CREATE TABLE products(
@@ -31,6 +37,10 @@
       product_price int,
       status varchar(255) --# in stock or out_of_stock
     );
+
+insert into products (product_name,categoey_id,product_price, status) values
+('Asus Laptop',1,40000,'A'),('Dell Laptop',1,40000,'A'),
+('Hp Laptop',1,40000,'A'),('Apple Laptop',1,55000,'A');
 
 --# details of billing and order placed
     CREATE TABLE innvoice(
@@ -44,6 +54,9 @@
       date_of_order date
     )
 
+insert into innvoice (transaction_id,user_id,transaction_amount,payment_mode,billing_address,status_of_order,date_of_order)
+values
+(100,1,50000,'UPI-samyak@sbi','delhi','placed','2021-02-25');
 --# details of products order in per orders
     CREATE TABLE orders(
       order_id SERIAL PRIMARY KEY;
@@ -52,9 +65,11 @@
       quantity int,
     )
 
+insert into (product_id,bill_id,quantity) values (11,2,1);
 
 
--- # Views to see all the products order by a particular user
+
+-- # Views to see all the products order by a all user
 
     create  or replace view orderdetails
     as
@@ -77,20 +92,3 @@
 
 
 -- # 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

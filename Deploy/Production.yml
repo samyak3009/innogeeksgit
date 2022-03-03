@@ -1,0 +1,75 @@
+
+
+Developer A ----> Node 12.1, Mongo 5.2, Angular 6, Redis (DB) , Soket.IO, KAFKA, Ubuntu 12
+Developer B ----> Node 12.1, Mongo 5.2, Angular 6, Redis (DB) , Soket.IO, KAFKA, Ubuntu 12
+Developer C ----> Node 12.1, Mongo 5.2, Angular 6, Redis (DB) , Soket.IO, KAFKA, Ubuntu 12
+Developer D ----> Node 12.1, Mongo 5.2, Angular 6, Redis (DB) , Soket.IO, KAFKA, Ubuntu 12
+
+
+Test A,B,C
+Build A,B,C
+Development A,B,C
+..
+..
+1000 differnet people
+
+
+
+GIT ---> Software
+Github ----> Saas Provider
+Githlab
+BigBucket
+
+Container --> Concept
+Docker --> Software
+POD ---> Software (it ues docker internally)
+
+
+Docker 
+  - Docker Engine --> Core Component
+
+Windows
+  - No Docker Engine
+  - Docker Desktop
+
+MacOS
+  - No Docker Engine
+  - Docker Desktop
+
+Linux (Any)
+  - Docker Engine with Utility
+  
+Docker 
+----------------------------
+- Docker installation
+  - https://docs.docker.com/engine/install/ubuntu/
+
+- Docker Components
+  - Docker Engine
+  - Docker Desktop
+  - Docker Hub
+  - Docker Compose
+
+
+
+- Docker Image
+  - 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
