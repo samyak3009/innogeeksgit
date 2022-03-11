@@ -53,7 +53,62 @@ Docker
 
 
 - Docker Image
+  - Download Image 
+    - sudo docker pull node
+
+  - View images
+    - sudo docker images
+  - Images is randomly entity which will allow us to create N number of containers keeping the image same 
+
+  - Docker Container
+    - To create a simple conatiner
+      -$ sudo docker run node
+      -$ sudo docker images
+      -$ sudo docker ps # to check all the running continers
+      -$ sudo docker ps -a # to check all the existing continers
+      -$ sudo docker run -it node
+    
+    - Create a simple Nodejs app
+      - Go to the same folder where Dockerfile is Kept
+      - $ npm init --yes
+      - $ npm install express
+      - $ sudo docker build . #to build the image of a docker
+      - $ sudo docker run ea7694fb3dad #to run a conatainer from an image 
+      - $ sudo docker run -p 3000:3000 <imageid>  # this will attached the screen and create the container by running it
+      - $ sudo docker stop <containerid> #to stop the running container of a image
+      - $ sudo docker start <containerid> # to start the stoped container of a image
+      - $ sudo docker rm <containerid> # to remove the container of a image
+      - $ sudo docker rmi <imageid> # to remove the image
+
+    - Creating python docker
+      - $ sudo docker build -t mypython:v1 . # mypython will be the repo and v1 will be the label
+      - $ sudo docker run -it --name containername mypython:v1 # to create a container with shell 
+
+    - docker run works bydefault in a Attached mode
+    - docker start works bydefault in a Dettached mode
+
+
+- Configuration File which defined the expected destination configuration
+  - Environemnt details --> 
   - 
+
+
+
+
+
+- Docker Volume
+  - Application data like index.js
+  
+
+- 
+
+
+
+
+
+
+
+
 
 
 
